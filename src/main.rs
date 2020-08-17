@@ -144,8 +144,6 @@ pub fn collect_profit(
             // N % from the money spent on the bitcoin.
             let flat_minimum_margin =
                 top_purchase.buying_price() / Decimal::new(100, 0) * purchase_minimum_margin;
-            println!("margin {} x min margin{}", margin, flat_minimum_margin);
-            println!("{:?}", top_purchase);
 
             // If selling this offer yields expected marging, then sell it.
             if margin > flat_minimum_margin {
