@@ -29,7 +29,6 @@
 //!     ...
 //! ```
 
-
 mod models;
 mod prelude;
 mod seller;
