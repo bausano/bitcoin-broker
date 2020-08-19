@@ -30,7 +30,7 @@ CURRENT $/BTN: 8000
 ```
 
 In the example above we have two transactions. First transaction bought 0.75
-bitcons for $4.5k including process fees. The bitcoins were bought for exchange
+bitcoins for $4.5k including process fees. The bitcoins were bought for exchange
 rate of $5990 for 1 BTN. Compared towards current trend, this was a good
 purchase.
 
@@ -41,7 +41,7 @@ fees. That's $1.5k net profit on this transaction.
 Our algorithm will therefore try to sell the bitcoins bought in the first
 transaction, but refuse to sell off the bitcoins from the second transaction.
 
-In practise, we collect all transactions which are evaluated as "to sell" and
+In practice, we collect all transactions which are evaluated as "to sell" and
 merge them into one offer for current trending price.
 
 The evaluation of buy/sell is influenced by how much out of order the bitcoin
@@ -49,7 +49,7 @@ price is. If the current price is close to minimum over past 3 months which
 lasted at least N days, the algorithm will require larger margins to sell the
 bitcoins.
 
-Another factor that incluences the required margin is how much bitcoin do we
+Another factor that influences the required margin is how much bitcoin do we
 have in the owned purchases. The less bitcoin we own, the higher margin we
 required in order to sell.
 
