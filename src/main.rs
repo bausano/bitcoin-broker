@@ -1,3 +1,35 @@
+//! # Bitcoin broker
+//! The broker app trades bitcoin over public APIs. See the design doc for more
+//! information about the algorithm.
+//!
+//! The high level organization of the code are actors. Each relevant part is
+//! wrapped into a thread that runs it. A communication between the threads is
+//! achieved with channels.
+//!
+//! ## Flow of information
+//!
+//! ```
+//!      ...
+//!
+//!   ||     /\
+//!   ||     ||
+//!   \/     ||
+//!
+//! +------  Seller --------------------+
+//! | Responsible for deciding which    |
+//! | purchases to sell under what      |
+//! | condition. Receives trend updates |
+//! | and settings from control agent.  |
+//! +-----------------------------------+
+//!
+//!   ||     /\
+//!   ||     ||
+//!   \/     ||
+//!
+//!     ...
+//! ```
+
+
 mod models;
 mod prelude;
 mod seller;
