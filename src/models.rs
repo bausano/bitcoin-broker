@@ -28,6 +28,7 @@ pub struct Purchase {
 #[derive(Clone, Copy)]
 pub enum Fee {
     Percentage(Percentage),
+    None,
 }
 
 /// Represents an existing offer on the marketplace to sell bitcoins. When the
@@ -39,11 +40,11 @@ pub enum Fee {
 /// purchase costs from it.
 #[derive(Debug)]
 pub struct Offer {
-    id: Uuid,
+    pub id: Uuid,
     // How much do we expect to trade the bitcoins for.
-    rate: BtcExchangeRate,
+    pub rate: BtcExchangeRate,
     // What purchases are calculated in for the offer.
-    purchases: Vec<Purchase>,
+    pub purchases: Vec<Purchase>,
 }
 
 /// Each Purchase is evaluated primarily based on what was the exchange rate we
@@ -88,24 +89,25 @@ impl Purchase {
         &self,
         current_trend: BtcExchangeRate,
         fee: Fee,
-    ) -> HardCurr {
+    ) -> Cash {
         let margin = self.margin(current_trend);
         match fee {
             Fee::Percentage(p) => {
                 let flat_fee: Decimal = margin / Decimal::new(100, 0) * p;
                 margin - flat_fee
             }
+            Fee::None => margin,
         }
     }
 
     /// If we sold the purchase for the current exchange rate trend, ignoring
     /// the sell fees, what would be net profit on this purchase.
-    pub fn margin(&self, current_trend: BtcExchangeRate) -> HardCurr {
+    pub fn margin(&self, current_trend: BtcExchangeRate) -> Cash {
         self.btc * current_trend - self.buying_price()
     }
 
     /// How much have we paid in total for this offer, including fees.
-    pub fn buying_price(&self) -> HardCurr {
+    pub fn buying_price(&self) -> Cash {
         self.btc * self.rate
     }
 }
@@ -117,10 +119,6 @@ impl Offer {
             rate,
             purchases,
         }
-    }
-
-    pub fn purchases(&self) -> &[Purchase] {
-        &self.purchases
     }
 }
 
@@ -136,7 +134,7 @@ mod tests {
             Purchase::new(btc, rate)
         };
         let current_trend = BtcExchangeRate::new(10_000, 0);
-        assert_eq!(HardCurr::new(3500, 0), purchase.margin(current_trend));
+        assert_eq!(Cash::new(3500, 0), purchase.margin(current_trend));
 
         let purchase = {
             let rate = BtcExchangeRate::new(100, 0);
@@ -144,7 +142,7 @@ mod tests {
             Purchase::new(btc, rate)
         };
         let current_trend = BtcExchangeRate::new(50, 0);
-        assert_eq!(HardCurr::new(-250, 0), purchase.margin(current_trend));
+        assert_eq!(Cash::new(-250, 0), purchase.margin(current_trend));
     }
 
     #[test]

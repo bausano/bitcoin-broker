@@ -66,3 +66,8 @@ To be designed yet, first we test the validity of the selling part.
 ## Validation
 We pick some different buying algorithms, such as daily average, weekly minimum,
 random every N days.
+
+## Code organization
+The responsibilities are organized around actors. We have actors for deciding
+whether to sell, whether to buy, an actor which pulls the latest trend. These
+actors communicate with each other over channels.
