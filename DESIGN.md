@@ -63,9 +63,13 @@ work out, especially if our purchases are all of similar value.
 ### Buying
 To be designed yet, first we test the validity of the selling part.
 
+TODO: Random policy.
+
 ## Validation
 We pick some different buying algorithms, such as daily average, weekly minimum,
 random every N days.
+
+TODO: Scraped data.
 
 ## Code organization
 The responsibilities are organized around actors. We have actors for deciding

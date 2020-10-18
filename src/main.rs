@@ -38,6 +38,7 @@ use {crossbeam_channel::unbounded, std::thread};
 use {models::Fee, prelude::*};
 
 fn main() {
+    dotenv::dotenv().ok();
     env_logger::init();
 
     // The input (receiver) into the seller actor sends updates of current trend
